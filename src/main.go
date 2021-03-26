@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	server "github-gantt-api/src/server"
+	"log"
+	"net/http"
+)
 
 func main() {
-	fmt.Println("環境構築完了！！！！")
+	server, _ := server.NewServer()
+
+	if err := http.ListenAndServe(":5000", server); err != nil {
+		log.Fatalf("could not listen on port 5000 %v", err)
+	}
 }
