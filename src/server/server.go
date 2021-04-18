@@ -16,7 +16,8 @@ func (s *Server) issueHandler(w http.ResponseWriter, r *http.Request) {
 	length, _ := r.Body.Read(body)
 	var jsonBody map[string]interface{}
 	json.Unmarshal(body[:length], &jsonBody)
-	log.Println("ログ吐き出し")
+	log.Println("PRINT LOG")
+	log.Printf("%v\n", r.Body)
 	log.Printf("%v\n", jsonBody)
 }
 
