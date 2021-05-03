@@ -9,6 +9,7 @@ type Issue struct {
 	Id        uint16
 	Title     string
 	Url       string
+	Label     Label
 	StartDate time.Time
 	DueDate   time.Time
 	Progress  uint8
@@ -20,6 +21,11 @@ func NewIssue(id uint16, title string, url string) *Issue {
 	issue.Id = id
 	issue.Title = title
 	issue.Url = url
+	return issue
+}
+
+func (issue *Issue) SetLabel(label Label) *Issue {
+	issue.Label = label
 	return issue
 }
 
@@ -51,4 +57,12 @@ func (issue *Issue) SetProgress(progress uint8) (*Issue, error) {
 func (issue *Issue) SetAssignee(assignee string) *Issue {
 	issue.Assignee = assignee
 	return issue
+}
+
+type Label struct {
+	Id          uint16
+	Url         string
+	Name        string
+	Description string
+	Color       string
 }
