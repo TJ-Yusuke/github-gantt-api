@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	"github-gantt-api/src/domain/valueObject"
 	"time"
 )
 
@@ -9,15 +10,15 @@ type Issue struct {
 	Id        uint16
 	Title     string
 	Url       string
-	Repo      Repo
-	Label     Label
+	Repo      valueObject.Repo
+	Label     valueObject.Label
 	StartDate time.Time
 	DueDate   time.Time
 	Progress  uint8
 	Assignee  string
 }
 
-func NewIssue(id uint16, title string, url string, repo Repo) *Issue {
+func NewIssue(id uint16, title string, url string, repo valueObject.Repo) *Issue {
 	issue := new(Issue)
 	issue.Id = id
 	issue.Title = title
@@ -26,7 +27,7 @@ func NewIssue(id uint16, title string, url string, repo Repo) *Issue {
 	return issue
 }
 
-func (issue *Issue) SetLabel(label Label) *Issue {
+func (issue *Issue) SetLabel(label valueObject.Label) *Issue {
 	issue.Label = label
 	return issue
 }
@@ -59,12 +60,4 @@ func (issue *Issue) SetProgress(progress uint8) (*Issue, error) {
 func (issue *Issue) SetAssignee(assignee string) *Issue {
 	issue.Assignee = assignee
 	return issue
-}
-
-type Label struct {
-	Id          uint16
-	Url         string
-	Name        string
-	Description string
-	Color       string
 }
