@@ -9,6 +9,7 @@ type Issue struct {
 	Id        uint16
 	Title     string
 	Url       string
+	Repo      Repo
 	Label     Label
 	StartDate time.Time
 	DueDate   time.Time
@@ -16,11 +17,12 @@ type Issue struct {
 	Assignee  string
 }
 
-func NewIssue(id uint16, title string, url string) *Issue {
+func NewIssue(id uint16, title string, url string, repo Repo) *Issue {
 	issue := new(Issue)
 	issue.Id = id
 	issue.Title = title
 	issue.Url = url
+	issue.Repo = repo
 	return issue
 }
 
