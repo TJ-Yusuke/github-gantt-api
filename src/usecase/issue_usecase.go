@@ -5,6 +5,7 @@ import (
 	"github-gantt-api/src/domain/entity"
 	"github-gantt-api/src/domain/repository"
 	"github-gantt-api/src/domain/valueObject"
+	"sort"
 	"time"
 )
 
@@ -23,6 +24,10 @@ func (iu *IssueUseCase) GetIssues(projectId uint16) ([]*entity.Issue, error) {
 	if err != nil {
 		return nil, fmt.Errorf("could not get issues via github api of '%v'", err)
 	}
+	// 期日の最新順に並び替える
+	sort.Slice(issues, func(i, j int) bool {
+		return issues[i].DueDate.Before(issues[j].DueDate)
+	})
 	return issues, nil
 }
 
