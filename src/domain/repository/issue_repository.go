@@ -2,12 +2,10 @@ package repository
 
 import (
 	"github-gantt-api/src/domain/entity"
-	"time"
 )
 
 type IssueRepository interface {
-	GetIssues() ([]*entity.Issue, error)
-	SetStartDate(date time.Time, issue *entity.Issue) error
-	SetDueDate(date time.Time, issue *entity.Issue) error
-	SetProgress(progress uint8, issue *entity.Issue) error
+	// 開始日と期日が登録されているものしかとってこない
+	GetIssues(projectId uint16) ([]*entity.Issue, error)
+	UpdateIssue(issue *entity.Issue) error
 }
