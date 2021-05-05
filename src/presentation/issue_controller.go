@@ -17,14 +17,14 @@ func NewIssueController(useCase usecase.IssueUseCase) *IssueController {
 	return ic
 }
 
-func (ic *IssueController) GetIssues(projectId uint16) []*entity.Issue {
+func (ic *IssueController) GetIssues(projectId uint16) ([]*entity.Issue, error) {
 	issues, err := ic.useCase.GetIssues(projectId)
 	if err != nil {
-		fmt.Errorf("could not get Issues because of '%v'", err)
+		return nil, fmt.Errorf("could not get Issues because of '%v'", err)
 	}
 	// 期日の最新順に並び替える
 	sort.Slice(issues, func(i, j int) bool {
 		return issues[i].DueDate.Before(issues[j].DueDate)
 	})
-	return issues
+	return issues, nil
 }
