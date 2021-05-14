@@ -1,8 +1,8 @@
 package presentation
 
 import (
+	"encoding/json"
 	"fmt"
-	"github-gantt-api/src/domain/entity"
 	"github-gantt-api/src/usecase"
 )
 
@@ -16,10 +16,14 @@ func NewIssueController(useCase usecase.IssueUseCase) *IssueController {
 	return ic
 }
 
-func (ic *IssueController) GetIssues(projectId uint16) (response []*entity.Issue, error error) {
+func (ic *IssueController) GetIssues(projectId uint16) (response []byte, error error) {
 	issues, err := ic.useCase.GetIssues(projectId)
 	if err != nil {
 		return nil, fmt.Errorf("could not get Issues because of '%v'", err)
 	}
-	return issues, nil
+	res, err := json.Marshal(issues)
+	if err != nil {
+		return nil, fmt.Errorf("convert json error '%v'", err)
+	}
+	return res, nil
 }
