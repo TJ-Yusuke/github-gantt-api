@@ -52,7 +52,7 @@ func (issue *Issue) SetProgress(progress uint8) (*Issue, error) {
 		issue.Progress = progress
 		return issue, nil
 	} else {
-		return nil, errors.New("Progress is always in a range 0 to 100\n")
+		return nil, errors.New("Progress must be always in a range 0 to 100\n")
 	}
 }
 
