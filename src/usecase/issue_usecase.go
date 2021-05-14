@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github-gantt-api/src/domain/entity"
 	"github-gantt-api/src/domain/repository"
-	"github-gantt-api/src/domain/valueObject"
 	"time"
 )
 
@@ -41,7 +40,7 @@ func (iu *IssueUseCase) SetDueDate(date time.Time, oldIssue *entity.Issue) {
 	return
 }
 
-func (iu *IssueUseCase) SetLabel(label valueObject.Label, oldIssue *entity.Issue) {
+func (iu *IssueUseCase) SetLabel(label uint16, oldIssue *entity.Issue) {
 	newIssue := oldIssue.SetLabel(label)
 	err := iu.repository.UpdateIssue(newIssue)
 	if err != nil {
