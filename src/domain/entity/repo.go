@@ -1,4 +1,4 @@
-package valueObject
+package entity
 
 type Repo struct {
 	Id          uint16
