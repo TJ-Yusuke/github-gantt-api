@@ -18,8 +18,16 @@ func NewIssueUseCase(repository repository.IssueRepository) *IssueUseCase {
 	return iu
 }
 
-func (iu *IssueUseCase) GetIssues(projectId uint16) ([]*entity.Issue, error) {
-	issues, err := iu.repository.GetIssues(projectId)
+func (iu *IssueUseCase) GetIssue(issueId uint16) (*entity.Issue, error) {
+	issue, err := iu.repository.GetIssue(issueId)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch issue ID:%v, because of '%v'", issueId, err)
+	}
+	return issue, nil
+}
+
+func (iu *IssueUseCase) GetIssuesList(projectId uint16) ([]*entity.Issue, error) {
+	issues, err := iu.repository.GetIssuesList(projectId)
 	if err != nil {
 		return nil, fmt.Errorf("could not get issues via github api of '%v'", err)
 	}
@@ -69,8 +77,9 @@ func (iu *IssueUseCase) SetAssignee(assignee string, oldIssue *entity.Issue) {
 	return
 }
 
-func assertError(s string, err error) {
+func assertError(s string, err error) error {
 	if err != nil {
-		fmt.Errorf("%v because of '%v'", s, err)
+		return fmt.Errorf("%v because of '%v'", s, err)
 	}
+	return nil
 }
