@@ -46,3 +46,21 @@ func (ic *IssueController) SetStartDate(date []byte, oldIssueIdByte []byte) erro
 	}
 	return nil
 }
+
+func (ic *IssueController) SetDueDate(date []byte, oldIssueIdByte []byte) error {
+	oldIssueId := binary.BigEndian.Uint16(oldIssueIdByte)
+	oldIssue, err := ic.useCase.GetIssue(oldIssueId)
+	if err != nil {
+		return fmt.Errorf("failed to fetch issue %v", err)
+	}
+	layout := "Mon Jan 2 15:04:05 MST 2006"
+	dueDate, err := time.Parse(layout, string(date))
+	if err != nil {
+		return fmt.Errorf("failed to convert string to Time.time '%v'", err)
+	}
+	err2 := ic.useCase.SetDueDate(dueDate, oldIssue)
+	if err2 != nil {
+		return fmt.Errorf("failed to setStartDate '%v'", err2)
+	}
+	return nil
+}
