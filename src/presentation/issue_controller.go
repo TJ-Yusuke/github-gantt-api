@@ -29,9 +29,9 @@ func (ic *IssueController) GetIssues(projectId uint16) (response []byte, error e
 	}
 	return res, nil
 }
-func (ic *IssueController) SetStartDate(date []byte, oldIssueIdByte []byte) error {
-	oldIssueId := binary.BigEndian.Uint16(oldIssueIdByte)
-	oldIssue, err := ic.useCase.GetIssue(oldIssueId)
+func (ic *IssueController) SetStartDate(date []byte, issueIdByte []byte) error {
+	issueId := binary.BigEndian.Uint16(issueIdByte)
+	issue, err := ic.useCase.GetIssue(issueId)
 	if err != nil {
 		return fmt.Errorf("failed to fetch issue %v", err)
 	}
@@ -40,16 +40,16 @@ func (ic *IssueController) SetStartDate(date []byte, oldIssueIdByte []byte) erro
 	if err != nil {
 		return fmt.Errorf("failed to convert string to Time.time '%v'", err)
 	}
-	err2 := ic.useCase.SetStartDate(startDate, oldIssue)
+	err2 := ic.useCase.SetStartDate(startDate, issue)
 	if err2 != nil {
 		return fmt.Errorf("failed to setStartDate '%v'", err2)
 	}
 	return nil
 }
 
-func (ic *IssueController) SetDueDate(date []byte, oldIssueIdByte []byte) error {
-	oldIssueId := binary.BigEndian.Uint16(oldIssueIdByte)
-	oldIssue, err := ic.useCase.GetIssue(oldIssueId)
+func (ic *IssueController) SetDueDate(date []byte, issueIdByte []byte) error {
+	issueId := binary.BigEndian.Uint16(issueIdByte)
+	issue, err := ic.useCase.GetIssue(issueId)
 	if err != nil {
 		return fmt.Errorf("failed to fetch issue %v", err)
 	}
@@ -58,9 +58,22 @@ func (ic *IssueController) SetDueDate(date []byte, oldIssueIdByte []byte) error 
 	if err != nil {
 		return fmt.Errorf("failed to convert string to Time.time '%v'", err)
 	}
-	err2 := ic.useCase.SetDueDate(dueDate, oldIssue)
+	err2 := ic.useCase.SetDueDate(dueDate, issue)
 	if err2 != nil {
-		return fmt.Errorf("failed to setStartDate '%v'", err2)
+		return fmt.Errorf("failed to SetDueDate '%v'", err2)
+	}
+	return nil
+}
+
+func (ic *IssueController) SetProgress(progress uint8, issueIdByte []byte) error {
+	issueId := binary.BigEndian.Uint16(issueIdByte)
+	issue, err := ic.useCase.GetIssue(issueId)
+	if err != nil {
+		return fmt.Errorf("failed to fetch issue %v", err)
+	}
+	err2 := ic.useCase.SetProgress(progress, issue)
+	if err2 != nil {
+		return fmt.Errorf("failed to SetProgress '%v'", err2)
 	}
 	return nil
 }
