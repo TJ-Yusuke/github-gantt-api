@@ -1,4 +1,4 @@
-package valueObject
+package entity
 
 type Label struct {
 	Id          uint16
