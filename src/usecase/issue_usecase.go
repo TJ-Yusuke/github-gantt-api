@@ -38,48 +38,53 @@ func (iu *IssueUseCase) GetIssuesList(projectId uint16) ([]*entity.Issue, error)
 	return issues, nil
 }
 
-func (iu *IssueUseCase) SetStartDate(date time.Time, oldIssue *entity.Issue) {
+func (iu *IssueUseCase) SetStartDate(date time.Time, oldIssue *entity.Issue) error {
 	newIssue := oldIssue.SetStartDate(date)
 	err := iu.repository.UpdateIssue(newIssue)
-	assertError("could not set startDate", err)
-	return
+	if err != nil {
+		return fmt.Errorf("could not set startDate '%v'", err)
+	}
+	return nil
 }
 
-func (iu *IssueUseCase) SetDueDate(date time.Time, oldIssue *entity.Issue) {
+func (iu *IssueUseCase) SetDueDate(date time.Time, oldIssue *entity.Issue) error {
 	newIssue, err := oldIssue.SetDueDate(date)
-	assertError("could not set dueDate", err)
+	if err != nil {
+		return fmt.Errorf("could not set dueDate '%v'", err)
+	}
 	updateErr := iu.repository.UpdateIssue(newIssue)
-	assertError("could not set dueDate", updateErr)
-	return
+	if updateErr != nil {
+		return fmt.Errorf("could not set dueDate '%v'", updateErr)
+	}
+	return nil
 }
 
-func (iu *IssueUseCase) SetLabel(label uint16, oldIssue *entity.Issue) {
+func (iu *IssueUseCase) SetLabel(label uint16, oldIssue *entity.Issue) error {
 	newIssue := oldIssue.SetLabel(label)
 	err := iu.repository.UpdateIssue(newIssue)
 	if err != nil {
-		assertError("could not set Label", err)
+		return fmt.Errorf("could not set Label '%v'", err)
 	}
-	return
+	return nil
 }
 
-func (iu *IssueUseCase) SetProgress(progress uint8, oldIssue *entity.Issue) {
+func (iu *IssueUseCase) SetProgress(progress uint8, oldIssue *entity.Issue) error {
 	newIssue, err := oldIssue.SetProgress(progress)
-	assertError("could not set progress", err)
+	if err != nil {
+		return fmt.Errorf("could not set progress '%v'", err)
+	}
 	updateErr := iu.repository.UpdateIssue(newIssue)
-	assertError("could not set progress", updateErr)
-	return
+	if updateErr != nil {
+		return fmt.Errorf("could not set progress '%v'", updateErr)
+	}
+	return nil
 }
 
-func (iu *IssueUseCase) SetAssignee(assignee string, oldIssue *entity.Issue) {
+func (iu *IssueUseCase) SetAssignee(assignee string, oldIssue *entity.Issue) error {
 	newIssue := oldIssue.SetAssignee(assignee)
 	err := iu.repository.UpdateIssue(newIssue)
-	assertError("could not set assignee", err)
-	return
-}
-
-func assertError(s string, err error) error {
 	if err != nil {
-		return fmt.Errorf("%v because of '%v'", s, err)
+		return fmt.Errorf("could not set assignee '%v'", err)
 	}
 	return nil
 }
