@@ -59,15 +59,6 @@ func (iu *IssueUseCase) SetDueDate(date time.Time, oldIssue *entity.Issue) error
 	return nil
 }
 
-func (iu *IssueUseCase) SetLabel(label uint16, oldIssue *entity.Issue) error {
-	newIssue := oldIssue.SetLabel(label)
-	err := iu.repository.UpdateIssue(newIssue)
-	if err != nil {
-		return fmt.Errorf("could not set Label '%v'", err)
-	}
-	return nil
-}
-
 func (iu *IssueUseCase) SetProgress(progress uint8, oldIssue *entity.Issue) error {
 	newIssue, err := oldIssue.SetProgress(progress)
 	if err != nil {
@@ -76,15 +67,6 @@ func (iu *IssueUseCase) SetProgress(progress uint8, oldIssue *entity.Issue) erro
 	updateErr := iu.repository.UpdateIssue(newIssue)
 	if updateErr != nil {
 		return fmt.Errorf("could not set progress '%v'", updateErr)
-	}
-	return nil
-}
-
-func (iu *IssueUseCase) SetAssignee(assignee string, oldIssue *entity.Issue) error {
-	newIssue := oldIssue.SetAssignee(assignee)
-	err := iu.repository.UpdateIssue(newIssue)
-	if err != nil {
-		return fmt.Errorf("could not set assignee '%v'", err)
 	}
 	return nil
 }
