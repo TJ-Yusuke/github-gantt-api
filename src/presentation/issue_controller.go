@@ -21,8 +21,8 @@ func NewIssueController(useCase usecase.IssueUseCase, repository repository.Issu
 	return ic
 }
 
-func (ic *IssueController) GetIssuesList(projectNumber uint16) (response []byte, error error) {
-	issues, err := ic.useCase.GetIssuesList(projectNumber)
+func (ic *IssueController) GetIssuesList(projectNumber uint16, org string) (response []byte, error error) {
+	issues, err := ic.useCase.GetIssuesList(projectNumber, org)
 	if err != nil {
 		return nil, fmt.Errorf("could not get Issues because of '%v'", err)
 	}
