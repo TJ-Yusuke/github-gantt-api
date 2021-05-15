@@ -34,7 +34,7 @@ func (ic *IssueController) GetIssues(projectId uint16) (response []byte, error e
 }
 func (ic *IssueController) SetStartDate(date []byte, issueIdByte []byte) error {
 	issueId := binary.BigEndian.Uint16(issueIdByte)
-	issue, err := ic.useCase.GetIssue(issueId)
+	issue, err := ic.repository.GetIssue(issueId)
 	if err != nil {
 		return fmt.Errorf("failed to fetch issue %v", err)
 	}
@@ -52,7 +52,7 @@ func (ic *IssueController) SetStartDate(date []byte, issueIdByte []byte) error {
 
 func (ic *IssueController) SetDueDate(date []byte, issueIdByte []byte) error {
 	issueId := binary.BigEndian.Uint16(issueIdByte)
-	issue, err := ic.useCase.GetIssue(issueId)
+	issue, err := ic.repository.GetIssue(issueId)
 	if err != nil {
 		return fmt.Errorf("failed to fetch issue %v", err)
 	}
@@ -70,7 +70,7 @@ func (ic *IssueController) SetDueDate(date []byte, issueIdByte []byte) error {
 
 func (ic *IssueController) SetProgress(progress uint8, issueIdByte []byte) error {
 	issueId := binary.BigEndian.Uint16(issueIdByte)
-	issue, err := ic.useCase.GetIssue(issueId)
+	issue, err := ic.repository.GetIssue(issueId)
 	if err != nil {
 		return fmt.Errorf("failed to fetch issue %v", err)
 	}
