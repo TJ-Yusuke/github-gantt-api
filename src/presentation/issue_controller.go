@@ -4,17 +4,20 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"github-gantt-api/src/domain/repository"
 	"github-gantt-api/src/usecase"
 	"time"
 )
 
 type IssueController struct {
-	useCase usecase.IssueUseCase
+	useCase    usecase.IssueUseCase
+	repository repository.IssueRepository
 }
 
-func NewIssueController(useCase usecase.IssueUseCase) *IssueController {
+func NewIssueController(useCase usecase.IssueUseCase, repository repository.IssueRepository) *IssueController {
 	ic := new(IssueController)
 	ic.useCase = useCase
+	ic.repository = repository
 	return ic
 }
 

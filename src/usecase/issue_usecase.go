@@ -18,14 +18,6 @@ func NewIssueUseCase(repository repository.IssueRepository) *IssueUseCase {
 	return iu
 }
 
-func (iu *IssueUseCase) GetIssue(issueId uint16) (*entity.Issue, error) {
-	issue, err := iu.repository.GetIssue(issueId)
-	if err != nil {
-		return nil, fmt.Errorf("failed to fetch issue ID:%v, because of '%v'", issueId, err)
-	}
-	return issue, nil
-}
-
 func (iu *IssueUseCase) GetIssuesList(projectId uint16) ([]*entity.Issue, error) {
 	issues, err := iu.repository.GetIssuesList(projectId)
 	if err != nil {
