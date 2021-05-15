@@ -18,8 +18,8 @@ func NewIssueUseCase(repository repository.IssueRepository) *IssueUseCase {
 	return iu
 }
 
-func (iu *IssueUseCase) GetIssuesList(projectId uint16) ([]*entity.Issue, error) {
-	issues, err := iu.repository.GetIssuesList(projectId)
+func (iu *IssueUseCase) GetIssuesList(projectNumber uint16) ([]*entity.Issue, error) {
+	issues, err := iu.repository.GetIssuesList(projectNumber)
 	if err != nil {
 		return nil, fmt.Errorf("could not get issues via github api of '%v'", err)
 	}
