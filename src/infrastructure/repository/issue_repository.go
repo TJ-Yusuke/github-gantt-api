@@ -58,5 +58,6 @@ func (ir *IssueRepository) GetIssuesList(ctx context.Context, projectNumber uint
 			}
 		}
 	}
+	fmt.Println("success getting IssuesList")
 	return issuesList, nil
 }
